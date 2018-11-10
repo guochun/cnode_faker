@@ -12,5 +12,3 @@ export default new Router({
   base: process.env.BASE_URL,
   routes
 })
-
-//component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
