@@ -14,7 +14,7 @@
 
 <script>
 export default {
-
+  name: 'HeaderNav'
 }
 </script>
 
@@ -26,12 +26,12 @@ export default {
 img {
   max-width: 120px;
   margin-top: 10px;
-  margin-left: 50px;
+  margin-left: 100px;
 }
 ul {
-  list-style: none;
+
   float: right;
-  margin: 8px;
+  margin: 8px 100px;
 }
 li {
   display: inline-block;
@@ -40,7 +40,7 @@ li {
 a {
   text-decoration: none;
   color: #ccc;
-  font-size: 16px;
+  font-size: 14px;
   text-shadow: none;
 }
 </style>

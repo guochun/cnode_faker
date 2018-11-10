@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <Header />
+    <header-nav />
+    <div class="main">
+       <post-list/>
+    </div>
   </div>
 </template>
 <script>
-import Header from './components/Header'
+import HeaderNav from './components/HeaderNav'
+import PostList from './components/PostList'
 
 export default {
   name: 'App',
   components: {
     // eslint-disable-next-line
-    Header
+    HeaderNav,
+    PostList
   }
 }
 </script>
@@ -20,5 +25,10 @@ export default {
   content: "";
   display: block;
   clear: both;
+}
+.main {
+  width: 100%;
+  margin: 0 auto;
+
 }
 </style>
