@@ -2,20 +2,18 @@
   <div id="app">
     <header-nav />
     <div class="main">
-       <post-list/>
+       <router-view name="main"></router-view>
     </div>
   </div>
 </template>
 <script>
 import HeaderNav from './components/HeaderNav'
-import PostList from './components/PostList'
 
 export default {
   name: 'App',
   components: {
     // eslint-disable-next-line
-    HeaderNav,
-    PostList
+    HeaderNav
   }
 }
 </script>

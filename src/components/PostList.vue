@@ -5,7 +5,7 @@
       <img src="../assets/loading.gif" >
     </div>
     <!-- 发布帖子列表 -->
-    <div class="posts">
+    <div class="posts" v-else>
       <ul>
         <li >
           <div class="toobar">
@@ -33,8 +33,16 @@
           >
             {{post | formatTab}}
           </span>
-          <!-- 标题 -->
-          <span >{{post.title}}</span>
+          <router-link :to="{
+              name: 'post_content',
+              params: {
+                id: post.id
+              }
+            }"
+          >
+            <!-- 标题 -->
+            <span >{{post.title}}</span>
+          </router-link>
           <!-- 时间 -->
           <span class="last_reply">{{post.last_reply_at | formatDate}}</span>
         </li>
@@ -54,32 +62,12 @@ export default {
   },
   mounted () {
     this.isLoading = true
-    this.getData('http://cnodejs.org/api/v1/topics')
+    this.$http.getPostLiatData('http://cnodejs.org/api/v1/topics')
       .then(data => {
         this.isLoading = false
         this.posts = data
       })
-  },
-  methods: {
-    getData (url, { pages = 1, limit = 20 } = {}) {
-      return new Promise((resolve, reject) => {
-        this.$axios
-          .get(url, {
-            params: {
-              pages,
-              limit
-            }
-          })
-          .then(res => {
-            resolve(res.data.data)
-          })
-          .catch(err => {
-            throw new Error(err)
-          })
-      })
-    }
   }
-
 }
 </script>
 
