@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'http://cnodejs.org/api/v1/'
+const url = 'https://cnodejs.org/api/v1/'
 
 export default {
   get (path, params) {
