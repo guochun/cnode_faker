@@ -82,7 +82,6 @@ export default {
         .then(data => {
           this.isLoading = false
           this.posts = data
-          console.log(this.posts)
         })
     }
   }
