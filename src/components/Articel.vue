@@ -30,7 +30,7 @@
             <span v-if="reply.ups.lenght > 0">☝{{reply.ups.length}}</span>
             <span v-else></span>
           </div>
-          <p v-html="reply.content"></p>
+          <p  class="reply_html" v-html="reply.content"></p>
         </div>
       </div>
     </div>
@@ -52,6 +52,15 @@ export default {
         this.isLoading = false
         this.post = data
       })
+  },
+  watch: {
+    '$route' (to, from) {
+      this.$http.getArticelData(this.$route.params.id)
+        .then((data) => {
+          this.isLoading = false
+          this.post = data
+        })
+    }
   }
 }
 </script>
@@ -94,7 +103,7 @@ export default {
 }
 .replySec {
   border-bottom: 1px solid #e5e5e5;
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .loading {
@@ -103,7 +112,7 @@ export default {
 }
 
 .replyUp a:nth-of-type(2) {
-  margin-left: 0px;
+  margin-left: 8px;
   display: inline-block;
 }
 
@@ -136,5 +145,9 @@ export default {
 
 .markdown-text img {
   width: 92% !important;
+}
+
+.reply_html {
+  margin-top: 15px;
 }
 </style>

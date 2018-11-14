@@ -5,6 +5,9 @@ import router from './router'
 import store from './store'
 import './vueFilter'
 
+// import './assets/css/reset.css'
+import './assets/css/markdown-github.css'
+
 Vue.config.productionTip = false
 Vue.config.devtools = true
 

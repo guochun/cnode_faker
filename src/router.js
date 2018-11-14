@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Articel from './components/Articel.vue'
 import PostList from './components/PostList.vue'
 import UserInfo from './components/UserInfo.vue'
+import SliderBar from './components/SliderBar.vue'
 
 Vue.use(Router)
 
@@ -17,9 +18,10 @@ const routes = [
   },
   {
     name: 'post_content',
-    path: '/topic/:id',
+    path: '/topic/:id&author=:name',
     components: {
-      main: Articel
+      main: Articel,
+      sliderBar: SliderBar
     }
   },
   {

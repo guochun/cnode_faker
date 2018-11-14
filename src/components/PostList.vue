@@ -36,7 +36,8 @@
           <router-link :to="{
               name: 'post_content',
               params: {
-                id: post.id
+                id: post.id,
+                name: post.author.loginname
               }
             }"
           >
@@ -46,27 +47,44 @@
           <!-- 时间 -->
           <span class="last_reply">{{post.last_reply_at | formatDate}}</span>
         </li>
+        <li><Pagination @changePage="handleChangePage"></Pagination></li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import Pagination from './Pagination'
 export default {
   name: 'PostList',
+  components: {
+    Pagination
+  },
   data () {
     return {
       isLoading: false,
-      posts: []
+      posts: [],
+      postPage: 1
     }
   },
   mounted () {
     this.isLoading = true
-    this.$http.getPostLiatData('http://cnodejs.org/api/v1/topics')
-      .then(data => {
-        this.isLoading = false
-        this.posts = data
-      })
+    this.getPostListData(this.postPage)
+  },
+
+  methods: {
+    handleChangePage (page) {
+      this.postPage = page
+      this.getPostListData(page)
+    },
+    getPostListData (page = 1, limit = 20) {
+      this.$http.getPostLiatData(page, limit)
+        .then(data => {
+          this.isLoading = false
+          this.posts = data
+          console.log(this.posts)
+        })
+    }
   }
 }
 </script>
@@ -80,6 +98,7 @@ export default {
   margin-top: 10px;
 }
 ul {
+  list-style: none;
   width: 100%;
   max-width: 1344px;
   margin: 0 auto;

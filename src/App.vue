@@ -2,7 +2,8 @@
   <div id="app">
     <header-nav />
     <div class="main">
-       <router-view name="main"></router-view>
+      <router-view name="sliderBar"></router-view>
+      <router-view name="main"></router-view>
     </div>
   </div>
 </template>
@@ -19,14 +20,19 @@ export default {
 </script>
 
 <style>
+html {
+  background: #e1e1e1;
+
+}
+
 .clearfix ::after {
   content: "";
   display: block;
   clear: both;
 }
 .main {
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
-
+  padding: 10px;
 }
 </style>
