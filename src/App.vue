@@ -24,12 +24,6 @@ html {
   background: #e1e1e1;
 
 }
-
-.clearfix ::after {
-  content: "";
-  display: block;
-  clear: both;
-}
 .main {
   width: 80%;
   margin: 0 auto;

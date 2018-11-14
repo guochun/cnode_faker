@@ -24,6 +24,7 @@ export default {
 .header {
   background: #5a5555;
   height: 50px;
+  overflow: hidden;
 }
 img {
   max-width: 120px;
