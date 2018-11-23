@@ -13,7 +13,6 @@ import HeaderNav from './components/HeaderNav'
 export default {
   name: 'App',
   components: {
-    // eslint-disable-next-line
     HeaderNav
   }
 }

@@ -22,3 +22,10 @@ Vue.filter('formatTab', (post) => {
   if (post.tab === 'share') return '分享'
   if (post.tab === 'job') return '招聘'
 })
+
+Vue.filter('formatPostType', (post) => {
+  if (post.tab === 'share') return '分享'
+  if (post.tab === 'ask') return '问答'
+  if (post.tab === 'share') return '分享'
+  if (post.tab === 'job') return '招聘'
+})

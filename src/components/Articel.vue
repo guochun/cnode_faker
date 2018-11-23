@@ -4,20 +4,35 @@
     <div class="loading" v-if="isLoading">
       <img src="../assets/loading.gif" >
     </div>
+
     <div v-else>
+
+      <!-- 文章标题部分开始 -->
       <div class="topic_header">
-        <div class="topic_title">{{post.title}}</div>
+       <div class="topic_title">
+          <span
+            :class="{
+              put_good: post.good,
+              put_top: post.top,
+              topiclist_tab: (!post.good && !post.top)
+            }"
+          >
+            {{post | formatPostType}}
+          </span>
+          {{post.title}}
+       </div>
         <ul>
           <li>•发布于: {{post.create_at | formatDate}}</li>
           <li>•作者: {{post.author.loginname}}</li>
-          <li>•{{post.visit_count}}次浏览</li>
-          <li>•来至{{post | formatTab}}</li>
-          <li></li>
+          <li>•{{post.visit_count}} 次浏览</li>
+          <li>•来至 {{post | formatPostType}}</li>
         </ul>
         <div class="topic_content" v-html="post.content" ></div>
       </div>
+      <!-- 文章标题部分结束 -->
+
       <div id="reply">
-        <div class="topbar">回复</div>
+        <div class="topbar">{{post.reply_count}} 回复</div>
         <div v-for="(reply, index) in post.replies" :key="index" class="replySec">
           <div class="replyUp">
             <router-link :to="{name: 'user_info', params:{name: reply.author.loginname}}">
@@ -33,7 +48,9 @@
           <p  class="reply_html" v-html="reply.content"></p>
         </div>
       </div>
+
     </div>
+
   </div>
 </template>
 
@@ -136,6 +153,7 @@ export default {
   display: inline-block;
   font-size: 12px;
   color: #838383;
+  margin-right: 5px;
 }
 
 .topic_content {
@@ -149,5 +167,18 @@ export default {
 
 .reply_html {
   margin-top: 15px;
+}
+
+.put_good,
+.put_top {
+  background: #80bd01;
+  padding: 2px 4px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  color: #fff;
+  font-size: 12px;
+  margin-right: 10px;
 }
 </style>

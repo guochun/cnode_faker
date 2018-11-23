@@ -21,8 +21,9 @@
           <img :src="post.author.avatar_url" alt="author_avatar">
           <!-- 回复人数和访问人数 -->
           <span class="allcount">
-            <span class="reply_count">{{post.reply_count}}</span>
-            /{{post.visit_count}}
+            <span title="回复数" class="reply_count">{{post.reply_count}}</span>
+            /
+            <span title="点击数">{{post.visit_count}}</span>
           </span>
           <span
             :class="{
