@@ -9,11 +9,7 @@
       <ul>
         <li >
           <div class="toobar">
-            <span>全部</span>
-            <span>精华</span>
-            <span>分享</span>
-            <span>问答</span>
-            <span>招聘</span>
+            <span  class="toobar-item" :class="{active: currentType === item.type }" @click="getPostListData(item.type)" v-for="(item, index) in  postTypeList" :key="index" >{{item.name}}</span>
           </div>
         </li>
         <li v-for="post of posts" :key="post.id" class=".clearfix">
@@ -51,6 +47,7 @@
         <li><Pagination @changePage="handleChangePage"></Pagination></li>
       </ul>
     </div>
+
   </div>
 </template>
 
@@ -65,24 +62,49 @@ export default {
     return {
       isLoading: false,
       posts: [],
-      postPage: 1
+      postPage: 1,
+      currentType: 'all',
+      postTypeList: [
+        {
+          name: '全部',
+          type: 'all'
+        },
+        {
+          name: '精华',
+          type: 'good'
+        },
+        {
+          name: '分享',
+          type: 'share'
+        },
+        {
+          name: '问答',
+          type: 'ask'
+        },
+        {
+          name: '招聘',
+          type: 'job'
+        }
+      ]
     }
   },
   mounted () {
     this.isLoading = true
-    this.getPostListData(this.postPage)
+    this.getPostListData('all', this.postPage)
   },
 
   methods: {
     handleChangePage (page) {
       this.postPage = page
-      this.getPostListData(page)
+      this.getPostListData(this.currentType, page)
     },
-    getPostListData (page = 1, limit = 20) {
-      this.$http.getPostLiatData(page, limit)
+    getPostListData (tab, page = 1) {
+      this.isLoading = true
+      this.$http.getPostLiatData(tab, page)
         .then(data => {
           this.isLoading = false
           this.posts = data
+          this.currentType = tab
         })
     }
   }
@@ -181,18 +203,24 @@ li span {
   background-color: #f5f5f5;
 }
 
-.toobar span {
+.toobar .toobar-item {
   font-size: 14px;
   color: #80bd01;
   line-height: 40px;
   margin: 0 10px;
   cursor: pointer;
+  padding: 3px;
 }
 
-.toobar span:hover {
+.toobar .toobar-item:hover {
   color: #9e78c0;
 }
 
+.toobar .toobar-item.active {
+  color: #fff;
+  background: #80bd01;
+  border-radius: 3px;
+}
 a {
   text-decoration: none;
   color: black;

@@ -4,7 +4,7 @@
       <img src="../assets/cnodejs_light.svg" alt="logo">
     </router-link>
     <ul>
-      <li><a href="#">首页</a></li>
+      <router-link  :to="{name: 'root'}" tag="li"><a>首页</a></router-link>
       <li><a href="#">新手入门</a></li>
       <li><a href="#">API</a></li>
       <li><a href="#">关于</a></li>

@@ -17,8 +17,8 @@ export default {
         })
     })
   },
-  getPostLiatData (page = 1, limit = 20) {
-    return this.get('topics', { page, limit })
+  getPostLiatData (tab, page = 1) {
+    return this.get('topics', { tab, page })
   },
   getArticelData (id) {
     return this.get('topic/' + id)
