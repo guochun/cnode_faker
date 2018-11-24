@@ -1,17 +1,24 @@
 <template>
 <div class="pagination">
-  <button @click="returnHomePage">首页</button>
-  <button @click="chagePrevPage">上一页</button>
-  <button  class='pagebtn' v-if="judge">......</button>
-  <button
-    v-for="(btn, index) in pagesBtn"
-    :key="index"
-    :class="[{currentPage: (btn === currentPage)},'pagebtn']"
-    @click="changePage(btn)"
-  >
-    {{btn}}
-  </button>
-  <button @click="chageNextPage">下一页</button>
+  <div class="wrapper">
+    <button @click="returnHomePage">首页</button>
+    <button @click="chagePrevPage">上一页</button>
+    <button @click="changePage(currentPage - pagesBtn.length)" v-show="judge">......</button>
+    <button
+      v-for="(btn, index) in pagesBtn"
+      :key="index"
+      @click="changePage(btn)"
+      :class="{currentPage: (currentPage === pagesBtn[index]) }"
+    >
+      {{btn}}
+    </button>
+    <button @click="changePage(currentPage + pagesBtn.length)">......</button>
+    <button @click="chageNextPage">下一页</button>
+    <span class="gotopage">
+      <input  v-model.number="inputNumber" type="number">
+      <button @click="goToPage">GO</button>
+    </span>
+  </div>
 </div>
 </template>
 
@@ -20,8 +27,9 @@ export default {
   name: 'pagination',
   data () {
     return {
-      pagesBtn: [1, 2, 3, 4, 5, '......'],
+      pagesBtn: [1, 2, 3, 4, 5],
       currentPage: 1,
+      inputNumber: '',
       judge: false
     }
   },
@@ -33,21 +41,15 @@ export default {
       } else {
         this.judge = false
       }
-      if (page === this.pagesBtn[4]) {
-        this.pagesBtn.shift()
-        this.pagesBtn.splice(4, 0, this.pagesBtn[3] + 1)
-      } else if (page === this.pagesBtn[0] && page !== 1) {
-        // 在开头添加一个数字
-        this.pagesBtn.unshift(this.pagesBtn[0] - 1)
-        // 在结尾删除一个数字
-        this.pagesBtn.splice(5, 1)
-      }
-
+      this.pagesBtn = this.pagesBtn.map((item, index) => {
+        if (page > 4) return page + index
+        return index + 1
+      })
       this.$emit('changePage', page)
     },
     returnHomePage () {
       this.judge = false
-      this.pagesBtn = [1, 2, 3, 4, 5, '......']
+      this.pagesBtn = [1, 2, 3, 4, 5]
       this.currentPage = 1
       this.$emit('changePage', 1)
     },
@@ -58,6 +60,14 @@ export default {
       let prevPage = this.currentPage - 1
       if (prevPage <= 0) return
       this.changePage(prevPage)
+    },
+    goToPage () {
+      if (!this.inputNumber) return
+      if (this.inputNumber <= 0) {
+        this.inputNumber = 1
+      }
+      this.changePage(this.inputNumber)
+      this.inputNumber = ''
     }
   }
 }
@@ -65,13 +75,19 @@ export default {
 
 <style scoped>
 .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 5px;
   margin-bottom: 20px;
   background-color: white;
   padding: 6px 20px;
   border-radius: 5px;
-  /*box-shadow: 0px 2px 9px #888888;*/
   border: 1px solid #888888;
+}
+.wrapper {
+  display: flex;
+  align-items: center;
 }
 
 button {
@@ -80,7 +96,6 @@ button {
   color: #778087;
   border-radius: 3px;
   outline: none;
-  height: 21px;
   cursor: pointer;
   padding: 0 2px;
   width: 55px;
@@ -88,15 +103,17 @@ button {
   margin-right: 5px;
 }
 
-.pagebtn {
-  position: relative;
-  bottom: 1px;
-  width: 40px;
-  margin: 0 4px;
-}
-
 .currentPage {
   color: white;
   background-color: #1f1b1b;
+}
+
+.gotopage input {
+  width: 47px;
+  height: 21px;
+  padding: 2px;
+  border-radius: 3px;
+  margin-right: 5px;
+  text-align: center;
 }
 </style>

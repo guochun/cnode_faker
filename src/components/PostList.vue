@@ -1,11 +1,12 @@
 <template>
   <div class="post_list">
     <!-- loading 动画 -->
-    <div class="loading" v-if="isLoading">
+    <div class="loading" v-show="isLoading">
       <img src="../assets/loading.gif" >
     </div>
+
     <!-- 发布帖子列表 -->
-    <div class="posts" v-else>
+    <div class="posts" v-show="!isLoading">
       <ul>
         <li >
           <div class="toobar">
@@ -39,12 +40,12 @@
             }"
           >
             <!-- 标题 -->
-            <span >{{post.title}}</span>
+            <span>{{post.title}}</span>
           </router-link>
           <!-- 时间 -->
           <span class="last_reply">{{post.last_reply_at | formatDate}}</span>
         </li>
-        <li><Pagination @changePage="handleChangePage"></Pagination></li>
+        <li><Pagination ref="pagination" @changePage="handleChangePage"></Pagination></li>
       </ul>
     </div>
 
@@ -90,7 +91,7 @@ export default {
   },
   mounted () {
     this.isLoading = true
-    this.getPostListData('all', this.postPage)
+    this.getPostListData(this.currentType, this.postPage)
   },
 
   methods: {
@@ -104,7 +105,10 @@ export default {
         .then(data => {
           this.isLoading = false
           this.posts = data
-          this.currentType = tab
+          if (tab !== this.currentType) {
+            this.currentType = tab
+            this.$refs.pagination.returnHomePage()
+          }
         })
     }
   }
@@ -113,7 +117,6 @@ export default {
 
 <style scoped>
 .post_list {
-  width: 100%;
   background: #e1e1e1;
 }
 .posts {
@@ -122,8 +125,8 @@ export default {
 ul {
   list-style: none;
   width: 100%;
-  max-width: 1344px;
   margin: 0 auto;
+  padding: 0;
 }
 ul li:not(:first-child) {
   padding: 9px;
@@ -134,6 +137,10 @@ ul li:not(:first-child) {
   background-color: white;
   color: #333;
   border-top: 1px solid #f0f0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 40px;
 }
 .post_list img {
   width: 30px;

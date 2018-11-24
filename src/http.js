@@ -26,4 +26,5 @@ export default {
   getUserInfoData (name) {
     return this.get('user/' + name)
   }
+
 }
